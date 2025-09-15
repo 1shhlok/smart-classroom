@@ -22,3 +22,12 @@ app.get('/teachers', (req, res) => {
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.post('/teachers', (req, res) => {
+    const { name, subjects, available_times } = req.body;
+    const query = 'INSERT INTO teachers (name, subjects, available_times) VALUES (?, ?, ?)';
+    db.query(query, [name, subjects, available_times], (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.send('Teacher added successfully!');
+    });
+});
